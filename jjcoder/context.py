@@ -68,7 +68,7 @@ class ContextManager:
             if len(lines) <= 6:
                 continue
             snipped = (
-                "\n".join
+                "\n".join(lines[:3])
                 + f"\n...({len(lines)}lines, snipped to save context)...\n"
                 + "\n".join(lines[-3:])
             )
@@ -162,19 +162,19 @@ class ContextManager:
     @staticmethod
     def _extract_key_info(messages: list[dict]) -> str:
         import re
-        file_seen = set()
+        files_seen = set()
         errors = []
 
         for m in messages:
             text = m.get("content", "") or ""
             for match in re.finditer(r'[\w./\-]+\.\w{1,5}', text):
-                file_seen.add(match.group())
+                files_seen.add(match.group())
             for line in text.splitlines():
                 if "error" in line.lower():
                     errors.append(line.strip()[:150])
 
         parts = []
-        if file_seen:
+        if files_seen:
             parts.append(f"Files touched: {', '.join(sorted(files_seen)[:20])}")
         if errors:
             parts.append(f"Errors seen: {'; '.join(errors[:5])}")
