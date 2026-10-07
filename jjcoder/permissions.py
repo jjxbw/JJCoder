@@ -6,7 +6,10 @@ DEFAULT_STORE = Path.home() / ".jjcoder" / "permissions.json"
 
 class Permission:
 
-    READ_ONLY = frozenset({"read_file", "glob", "grep", "todo_write"})
+    READ_ONLY = frozenset({
+        "read_file", "glob", "grep", "todo_write",
+        "project_scan", "project_diagram", "web_search", "web_fetch",
+    })
 
     def __init__(self, ask=None, allow_all: bool = False, persist_path: Path | None = None):
         # ask(tool_name, arguments) -> "once" | "always" | "deny"
