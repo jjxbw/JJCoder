@@ -39,6 +39,7 @@ packages = ["jjcoder"]
 
 [project.optional-dependencies]
 litellm = ["litellm>=1.60.0,<2.0.0"]
+sql = ["psycopg[binary]>=3.2", "PyMySQL>=1.1"]
 dev = ["pytest>=7.0", "ruff>=0.9.0"]
 
 [project.scripts]

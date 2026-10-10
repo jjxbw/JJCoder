@@ -112,6 +112,9 @@ class Agent:
             self.hooks.run_post(tc.name, tc.arguments, result)
 
     def _permit(self, tc) -> str | None:
+        tool = self._tool_by_name.get(tc.name)
+        if getattr(tool, "read_only", False):
+            return None
         if self.plan_mode and tc.name not in Permission.READ_ONLY:
             return (
                 "Plan mode is on, so this call was refused: plan mode is "
@@ -191,4 +194,3 @@ class Agent:
         todo = self._tool_by_name.get("todo_writer")
         if isinstance(todo, TodoWriterTool):
             todo._tasks = []
-        

@@ -157,6 +157,7 @@ class MCPTool(Tool):
         self.name = f"mcp__{client.name}__{spec['name']}"
         self.description = spec.get("description") or ""
         self.parameters = spec.get("inputSchema") or {"type": "object", "properties": {}}
+        self.read_only = bool((spec.get("annotations") or {}).get("readOnlyHint", False))
 
     def execute(self, **kwargs) -> str:
         return self._client.call_tool(self._remote_name, kwargs)
